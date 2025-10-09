@@ -254,4 +254,4 @@ fig.legend(handles, combined_labels, loc = 'lower center', ncol = 2, fontsize = 
 
 # export plot
 plt.tight_layout(rect = [0, 0.20, 1, 1])
-plt.savefig(output_dir + "HF_ROC_PRC_curve_combined.png", dpi = 300)
+plt.savefig(output_dir + "HF_ROC_PRC_curve_combined.png", dpi = 1200)
