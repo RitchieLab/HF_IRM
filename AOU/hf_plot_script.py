@@ -54,7 +54,11 @@ mean_metrics = pd.read_csv(mean_metrics_filename, index_col = 0)
 
 # set significance threshold
 corrected_sig = 0.05
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> aca39b4 (update plotting script for poster)
 # split dataset
 hf_train = hf_balanced.sample(frac = 0.7, random_state = iter)
 hf_reg = hf_train.sample(frac = 0.5, random_state = iter)
@@ -142,7 +146,11 @@ for col in (crs_cols + pxs_cols):
     weighted_colname = col + '_WEIGHTED'
     beta_val = beta.loc[col, colname]
     hf_no_train[weighted_colname] = hf_no_train[col] * beta_val
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> aca39b4 (update plotting script for poster)
 # compute integrated scores
 hf_no_train['CRS_SUM'] = hf_no_train[crs_cols].sum(axis = 1, min_count = 1)
 hf_no_train['CRS_WEIGHTED_SUM'] = hf_no_train[crs_weighted_cols].sum(axis = 1, min_count = 1)
@@ -159,7 +167,11 @@ x = hf_val.drop(columns = ['HF'])
 y = hf_val[['HF']]
 x_resampled, y_resampled = SMOTE(random_state = iter).fit_resample(x, y)
 hf_val = pd.concat([x_resampled, y_resampled], axis = 1)
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> aca39b4 (update plotting script for poster)
 # create empty dictionaries
 roc_data = {}
 prc_data = {}
@@ -190,6 +202,10 @@ for index, col in enumerate(eval_col_list, start = 1):
         fpr, tpr, _ = roc_curve(test_df['HF'], y_prob_cont)
         precision, recall, _ = precision_recall_curve(test_df['HF'], y_prob_cont)
         
+<<<<<<< HEAD
+=======
+        #print(col)
+>>>>>>> aca39b4 (update plotting script for poster)
         col = str(col).replace("'", "")
         col = col.replace("[", "")
         col = col.replace("]", "")
@@ -202,6 +218,10 @@ for index, col in enumerate(eval_col_list, start = 1):
                               "CRS Risk Factors")
         col = col.replace("BMI_INV_NORMAL_SCALE + SMOKING + PA_EVERYDAY_SCALE + NEIGHBORHOOD_DRUG_USE_SCALE + NEIGHBORHOOD_SAFE_CRIME_SCALE + NEIGHBORHOOD_TRUST_SCALE + NEIGHBORHOOD_BUILDING_SCALE + NEIGHBORHOOD_VANDALISM_SCALE + NEIGHBORHOOD_SIDEWALK_SCALE + NEIGHBORHOOD_BIKE_SCALE + NEIGHBORHOOD_CLEAN_SCALE + NEIGHBORHOOD_UNSAFE_WALK_SCALE + NEIGHBORHOOD_CARE_SCALE + NEIGHBORHOOD_ALOT_CRIME_SCALE + NEIGHBORHOOD_CRIME_WALK_SCALE + NEIGHBORHOOD_GRAFFITI_SCALE + NEIGHBORHOOD_FREE_AMENITIES_SCALE + NEIGHBORHOOD_PPL_HANGING_AROUND_SCALE + NEIGHBORHOOD_TROUBLE_SCALE + NEIGHBORHOOD_STORES_SCALE + NEIGHBORHOOD_TRANSIT_SCALE + INCOME_SCALE + EDUCATION_HIGHEST_SCALE + CENSUS_MEDIAN_INCOME_INV_NORMAL_SCALE",
                               "PXS Risk Factors")
+<<<<<<< HEAD
+=======
+        #print(col)
+>>>>>>> aca39b4 (update plotting script for poster)
         col = 'Model ' + str(index) + ': ' + col
         
         auroc = mean_metrics.loc[col, 'AUROC']
@@ -212,11 +232,16 @@ for index, col in enumerate(eval_col_list, start = 1):
 
 # set colorblind palette
 sns.set_palette("colorblind")
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> aca39b4 (update plotting script for poster)
 # make ROC and PRC curves on 2 panels of the same plot
 fig, axes = plt.subplots(1, 2, figsize=(16, 8))
 ax1 = axes[0]
 ax2 = axes[1]
+<<<<<<< HEAD
     
 # make ROC curve
 #plt.figure(figsize = (10, 8))
@@ -229,12 +254,28 @@ ax1.set_title('AOU Heart Failure Prediction Receiver-Operating Curves')
 #ax1.legend(loc='lower right', fontsize = 'small')
 ax1.grid(True)
 ax1.text(0.02, 1.02, "A", transform = ax1.transAxes, fontsize = 16, fontweight = "bold", va = "bottom", ha = "right")
+=======
+
+# make ROC curve
+#plt.figure(figsize = (10, 8))
+for col, (fpr, tpr, auroc) in roc_data.items():
+    ax1.plot(fpr, tpr, lw = 7)
+ax1.plot([0, 1], [0, 1], linestyle = '--', color = 'gray', lw = 7)
+ax1.set_xlabel('False Positive Rate', fontsize = 35)
+ax1.set_ylabel('True Positive Rate', fontsize = 35)
+ax1.set_title('AOU Heart Failure Prediction Receiver-Operating Curves', fontsize = 40)
+ax1.tick_params(axis = 'both', labelsize = 30)
+#ax1.legend(loc='lower right', fontsize = 'small')
+ax1.grid(True)
+#ax1.text(0.02, 1.02, "A", transform = ax1.transAxes, fontsize = 35, fontweight = "bold", va = "bottom", ha = "right")
+>>>>>>> aca39b4 (update plotting script for poster)
 #plt.tight_layout()
 #plt.savefig((output_dir + "HF_ROC_curve.png"), dpi = 300)
 
 # make PRC curve
 #plt.figure(figsize = (10, 8))
 for col, (precision, recall, auprc) in prc_data.items():
+<<<<<<< HEAD
     ax2.plot(recall, precision, lw = 2)
 ax2.set_xlabel('Recall')
 ax2.set_ylabel('Precision')
@@ -242,11 +283,22 @@ ax2.set_title('AOU Heart Failure Prediction Precision-Recall Curves')
 #ax2.legend(loc = 'upper right', fontsize = 'small')
 ax2.grid(True)
 ax2.text(0.02, 1.02, "B", transform = ax2.transAxes, fontsize = 16, fontweight = "bold", va = "bottom", ha = "right")
+=======
+    ax2.plot(recall, precision, lw = 7)
+ax2.set_xlabel('Recall', fontsize = 35)
+ax2.set_ylabel('Precision', fontsize = 35)
+ax2.set_title('AOU Heart Failure Prediction Precision-Recall Curves', fontsize = 40)
+ax2.tick_params(axis = 'both', labelsize = 30)
+#ax2.legend(loc = 'upper right', fontsize = 'small')
+ax2.grid(True)
+#ax2.text(0.02, 1.02, "B", transform = ax2.transAxes, fontsize = 35, fontweight = "bold", va = "bottom", ha = "right")
+>>>>>>> aca39b4 (update plotting script for poster)
 #plt.tight_layout()
 #plt.savefig((output_dir + "HF_PRC_curve.png"), dpi = 300)
 
 # create legend
 handles = ax1.get_lines()  # handles for the legend
+<<<<<<< HEAD
 combined_labels = [
     f"{model} (AUROC = {auroc:.3f}, AUPRC = {auprc:.3f})"
     for model, (auroc, auprc) in auroc_auprc.items()]
@@ -255,3 +307,15 @@ fig.legend(handles, combined_labels, loc = 'lower center', ncol = 2, fontsize = 
 # export plot
 plt.tight_layout(rect = [0, 0.20, 1, 1])
 plt.savefig(output_dir + "HF_ROC_PRC_curve_combined.png", dpi = 1200)
+=======
+#combined_labels = [
+#    f"{model} (AUROC = {auroc:.3f}, AUPRC = {auprc:.3f})"
+#    for model, (auroc, auprc) in auroc_auprc.items()]
+combined_labels = [f"{model}" for model, (auroc, auprc) in auroc_auprc.items()]
+fig.legend(handles, combined_labels, loc = 'lower center', ncol = 2, fontsize = 35)#, bbox_to_anchor = (0.5, -0.08))
+fig.set_size_inches(36, 24)
+
+# export plot
+plt.tight_layout(rect = [0, 0.3, 1, 1])
+plt.savefig(output_dir + "HF_ROC_PRC_curve_combined.png", dpi = 300)
+>>>>>>> aca39b4 (update plotting script for poster)
